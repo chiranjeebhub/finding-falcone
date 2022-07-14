@@ -2,7 +2,7 @@ import logo from "./logo.svg";
 import "./App.scss";
 import NavBar from "./components/NavBar";
 // import Selection from "./components/Selection";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { GlobalContex } from "./globalContext";
 import axios from "axios";
@@ -166,7 +166,78 @@ function App() {
   };
 
   const conditionalDiv = () => {
-    if (result === null) {
+    if (result?.status !== "false" && result !== null) {
+      return (
+        <div
+          style={{
+            padding: "6vw 10vw",
+            height: "52vh",
+            fontSize: "30px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div style={{ fontWeight: 600 }}>
+            Success! Congratulations on Finding Falcone. King Shan is mightly
+            pleased.
+          </div>
+          <br />
+          <div>Time Taken: {totalTime}</div>
+          <div>Planet Found: {result.planet_name}</div>
+          <br />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <div
+              className="submitButton"
+              onClick={(e) => window.location.reload()}
+            >
+              Start Again
+            </div>
+          </div>
+        </div>
+      );
+    } else if (result?.status === "false" && result !== null) {
+      return (
+        <div
+          style={{
+            padding: "6vw 10vw",
+            height: "52vh",
+            fontSize: "30px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div style={{ fontWeight: 600 }}>
+            Mission Failed! Falcone is yet to be found. King Shan is waiting.
+          </div>
+
+          <br />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <div
+              className="submitButton"
+              onClick={(e) => window.location.reload()}
+            >
+              Start Again
+            </div>
+          </div>
+        </div>
+      );
+    } else {
       return (
         <>
           <div style={{ padding: "6vw 10vw", height: "52vh" }}>
@@ -226,77 +297,6 @@ function App() {
             ""
           )}
         </>
-      );
-    } else if (result.status) {
-      return (
-        <div
-          style={{
-            padding: "6vw 10vw",
-            height: "52vh",
-            fontSize: "30px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <div style={{ fontWeight: 600 }}>
-            Success! Congratulations on Finding Falcone. King Shan is mightly
-            pleased.
-          </div>
-          <br />
-          <div>Time Taken: {totalTime}</div>
-          <div>Planet Found: {result.planet_name}</div>
-          <br />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <div
-              className="submitButton"
-              onClick={(e) => window.location.reload()}
-            >
-              Start Again
-            </div>
-          </div>
-        </div>
-      );
-    } else if (result.status === "false") {
-      return (
-        <div
-          style={{
-            padding: "6vw 10vw",
-            height: "52vh",
-            fontSize: "30px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <div style={{ fontWeight: 600 }}>
-            Mission Failed! Falcone is yet to be found. King Shan is waiting.
-          </div>
-
-          <br />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <div
-              className="submitButton"
-              onClick={(e) => window.location.reload()}
-            >
-              Start Again
-            </div>
-          </div>
-        </div>
       );
     }
   };
