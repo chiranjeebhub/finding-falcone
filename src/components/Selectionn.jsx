@@ -161,7 +161,7 @@ const Selection = ({
         <div onMouseDown={(e) => e.stopPropagation()}>
           {showPlanetList ? (
             <div>
-              {filteredPlanets.map((item) => {
+              {filteredPlanets.map((item, index) => {
                 return (
                   <div
                     onClick={(e) => {
@@ -170,8 +170,14 @@ const Selection = ({
                       //   setShowPlanetList(null);
                     }}
                     className="planetItem"
+                    style={{ display: "flex", alignItems: "center" }}
                   >
-                    {item.name}
+                    <img
+                      src={require(`../assets/images/planets/${item?.name.toLowerCase()}.png`)}
+                      alt=""
+                      style={{ width: "30px" }}
+                    />
+                    <div style={{ paddingLeft: "10px" }}>{item.name}</div>
                   </div>
                 );
               })}

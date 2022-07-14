@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { GlobalContex } from "../../globalContext";
 
 const NavBar = () => {
+  const { totalTime } = useContext(GlobalContex);
   return (
     <>
       <div
@@ -8,10 +10,14 @@ const NavBar = () => {
           display: "flex",
           justifyContent: "space-between",
           padding: "30px",
+          alignItems: "center",
         }}
       >
         <div style={{ fontSize: "40px" }}>
-          Finding <b>Falcone</b>
+          Finding <b>Falcone</b>{" "}
+          <span style={{ fontSize: "20px" }}>
+            {totalTime ? "in " + totalTime + " Light Years" : ""}
+          </span>
         </div>
         <div style={{ display: "flex" }}>
           <div
