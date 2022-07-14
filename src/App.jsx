@@ -1,16 +1,17 @@
-import logo from "./logo.svg";
-import "./App.scss";
-import NavBar from "./components/NavBar";
-// import Selection from "./components/Selection";
 import { useEffect, useMemo, useState, useRef } from "react";
+import axios from "axios";
 
 import { GlobalContex } from "./globalContext";
-import axios from "axios";
-import Selection from "./components/Selectionn";
+
+import "./App.scss";
+
+import NavBar from "./components/NavBar";
 import Planets from "./components/Planets";
 import Vehicles from "./components/Vehicles";
 
 function App() {
+  //States & Refs Declaration
+
   const wrapperRef = useRef();
   const [planets, setPlanets] = useState([]);
   const [vehicles, setVehicles] = useState([]);
@@ -24,37 +25,7 @@ function App() {
   const [pair, setpair] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    axios.get(`https://findfalcone.herokuapp.com/planets`).then((res) => {
-      setPlanets(res.data);
-    });
-    axios.get(`https://findfalcone.herokuapp.com/vehicles`).then((res) => {
-      setVehicles(res.data);
-    });
-  }, []);
-
-  const updateUnit = (item) => {
-    const found = vehicles.find((obj) => obj.name == item.name);
-    if (found) {
-      found.total_no = found.total_no - 1;
-      setVehicles([...vehicles]);
-    }
-  };
-
-  useEffect(() => {
-    pair.map((item) => {
-      updateTime(item.distance, item.speed);
-    });
-    if (pair.length === 4) {
-      setShowRides(false);
-      setSelectedPlanet(null);
-    }
-  }, [pair]);
-
-  const updateTime = (distance, speed) => {
-    const time = Number(distance) / Number(speed);
-    setTotalTime(totalTime + time);
-  };
+  //Custom Hook
 
   function useOutsideClickListener(ref) {
     useEffect(() => {
@@ -72,35 +43,42 @@ function App() {
       };
     }, [ref]);
   }
-
   useOutsideClickListener(wrapperRef);
 
-  const conditionalSelectedRide = (item) => {
-    const found = pair.find((o) => o.planet === item.name);
-    if (found) {
-      return (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <img
-            // className="App-logo"
-            src={require(`./assets/images/vehicles/${found.vehicleMax}.jpeg`)}
-            alt=""
-            style={{ width: "50px", height: "150px" }}
-          />
-          <div
-            style={{ fontWeight: 700, fontSize: "20px", paddingTop: "10px" }}
-          >
-            {found.vehicle}
-          </div>
-          <div>Speed: {found.speed} Light Years</div>
-        </div>
-      );
+  // useEffects
+
+  useEffect(() => {
+    axios.get(`https://findfalcone.herokuapp.com/planets`).then((res) => {
+      setPlanets(res.data);
+    });
+    axios.get(`https://findfalcone.herokuapp.com/vehicles`).then((res) => {
+      setVehicles(res.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    pair.map((item) => {
+      updateTime(item.distance, item.speed);
+    });
+    if (pair.length === 4) {
+      setShowRides(false);
+      setSelectedPlanet(null);
     }
+  }, [pair]);
+
+  // Functions
+
+  const updateUnit = (item) => {
+    const found = vehicles.find((obj) => obj.name == item.name);
+    if (found) {
+      found.total_no = found.total_no - 1;
+      setVehicles([...vehicles]);
+    }
+  };
+
+  const updateTime = (distance, speed) => {
+    const time = Number(distance) / Number(speed);
+    setTotalTime(totalTime + time);
   };
 
   const getToken = () => {
@@ -152,20 +130,40 @@ function App() {
       });
   };
 
-  const conditionalDiv = () => {
-    if (result?.status !== "false" && result !== null) {
+  //Conditional UI Renders
+
+  const conditionalSelectedRide = (item) => {
+    const found = pair.find((o) => o.planet === item.name);
+    if (found) {
       return (
         <div
           style={{
-            padding: "6vw 10vw",
-            height: "52vh",
-            fontSize: "30px",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
             alignItems: "center",
           }}
         >
+          <img
+            // className="App-logo"
+            src={require(`./assets/images/vehicles/${found.vehicleMax}.jpeg`)}
+            alt=""
+            style={{ width: "50px", height: "150px" }}
+          />
+          <div
+            style={{ fontWeight: 700, fontSize: "20px", paddingTop: "10px" }}
+          >
+            {found.vehicle}
+          </div>
+          <div>Speed: {found.speed} Light Years</div>
+        </div>
+      );
+    }
+  };
+
+  const conditionalDiv = () => {
+    if (result?.status !== "false" && result !== null) {
+      return (
+        <div className="resultSection">
           <img
             className="App-logo-final"
             src={require(`./assets/images/planets/${result?.planet_name?.toLowerCase()}.png`)}
@@ -204,17 +202,14 @@ function App() {
       );
     } else if (result?.status === "false" && result !== null) {
       return (
-        <div
-          style={{
-            padding: "6vw 10vw",
-            height: "52vh",
-            fontSize: "30px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <div className="resultSection">
+          <img
+            className="App-logo-failed"
+            src={require(`./assets/images/loading.jpeg`)}
+            alt=""
+          />
+
+          <br />
           <div style={{ fontWeight: 600, textAlign: "center" }}>
             Mission Failed! Falcone is yet to be found.
             <br />
@@ -287,14 +282,13 @@ function App() {
     }
   };
 
+  // context values
+
   const value = {
     planets,
     setPlanets,
     vehicles,
     setVehicles,
-    // query,
-    // setQuery,
-    // updateTime,
     totalTime,
     selectedPlanet,
     pair,

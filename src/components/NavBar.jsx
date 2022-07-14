@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { GlobalContex } from "../../globalContext";
+import { GlobalContex } from "../globalContext";
 
 const NavBar = () => {
   const { totalTime } = useContext(GlobalContex);

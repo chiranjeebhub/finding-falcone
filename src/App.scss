@@ -173,6 +173,12 @@
   cursor: pointer;
 }
 
+.App-logo-failed{
+  height: 100px;
+  -webkit-transform: scaleX(-1);
+  transform: scaleY(-1);
+}
+
 .App-logo-selected{
   height: 100px;
   border: 10px solid lightblue;
@@ -235,4 +241,14 @@
 @keyframes action {
     0% { transform: translateY(0); }
     100% { transform: translateY(-10px); }
+}
+
+.resultSection{
+  padding: 6vw 10vw;
+  height: 52vh;
+  font-size: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
