@@ -126,33 +126,8 @@ const Vehicles = () => {
         )}
 
         {!showRides && pair.length < 1 ? (
-          <div
-            style={{
-              margin: "20vh 10vw",
-              padding: "7vh",
-              border: "1px solid lightgray",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-          >
-            <div
-              style={{
-                background: "white",
-                marginTop: "-9.9vh",
-                marginBottom: "5vh",
-                padding: "10px",
-                width: "200px",
-                textAlign: "center",
-                // border: "1px solid lightgray",
-                fontWeight: 700,
-                fontSize: "20px",
-                // background: "black",
-                // color: "white",
-              }}
-            >
-              Mission & Objective
-            </div>
+          <div className="mission-container">
+            <div className="mission">Mission & Objective</div>
             <div
               style={{
                 display: "flex",

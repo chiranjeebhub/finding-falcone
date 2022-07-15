@@ -1,11 +1,6 @@
 .App {
   height: 100vh;
-  /* color: white; */
-  /* text-align: center; */
- /* background-color: black; */
-//  background: rgb(2,0,36);
-// background: linear-gradient(180deg, rgba(2,0,36,1) 20%, rgba(255,255,255,1) 100%);
-  
+  overflow: hidden;
 }
 
 .selectionGrid{
@@ -159,8 +154,12 @@
 
 .App-logo {
   height: 100px;
-  // pointer-events: none;
+  transition: transform .2s;
   cursor: pointer;
+  &:hover{
+    transform: scale(1.5);
+  }
+ 
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -188,15 +187,14 @@
   padding:'10px'
 }
 
-.App-logo :hover{
-  transform: scale(1.5);
-}
+
 .zoom{
   transition: transform .2s;
+  &:hover{
+    transform: scale(1.5);
+  }
 }
-.zoom :hover{
-   transform: scale(1.5);
-}
+
 
 // .selectedPlanets{
 //   height: 100px;
@@ -254,4 +252,25 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.mission-container{
+  margin: 18vh 10vw;
+  padding: 7vh;
+  border: 1px solid lightgray;
+  // display: flex;
+  // fle
+  // justify-content: center;
+} 
+
+
+.mission{
+  background: white;
+  margin-top: -9.9vh;
+  margin-bottom: 5vh;
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 20px;
 }
