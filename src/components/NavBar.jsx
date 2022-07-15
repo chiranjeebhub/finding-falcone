@@ -16,7 +16,7 @@ const NavBar = () => {
         <div style={{ fontSize: "40px" }}>
           Finding <b>Falcone</b>{" "}
           <span style={{ fontSize: "20px" }}>
-            {totalTime ? "in " + totalTime + " Light Years" : ""}
+            {totalTime ? "in " + totalTime + " Days" : ""}
           </span>
         </div>
         <div style={{ display: "flex" }}>
@@ -27,7 +27,12 @@ const NavBar = () => {
             Reset
           </div>
           <div style={{ padding: "0px 10px" }}>|</div>
-          <div>Home</div>
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={(e) => window.location.reload()}
+          >
+            Home
+          </div>
         </div>
       </div>
     </>

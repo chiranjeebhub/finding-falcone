@@ -24,6 +24,7 @@ function App() {
   const [showRides, setShowRides] = useState(false);
   const [pair, setpair] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [resources, setResources] = useState();
 
   //Custom Hook
 
@@ -69,12 +70,27 @@ function App() {
   // Functions
 
   const updateUnit = (item) => {
-    const found = vehicles.find((obj) => obj.name == item.name);
+    const found = vehicles.find((obj) => obj.name == item.name || item.planet);
     if (found) {
       found.total_no = found.total_no - 1;
       setVehicles([...vehicles]);
     }
   };
+
+  useEffect(() => {
+    if (selectedPlanet !== null) {
+      var tempResource = 4;
+      vehicles.map((item) => {
+        if (
+          item.max_distance < selectedPlanet.distance ||
+          item.total_no === 0
+        ) {
+          tempResource = tempResource - 1;
+        }
+      });
+      setResources(tempResource);
+    }
+  }, [selectedPlanet]);
 
   const updateTime = (distance, speed) => {
     const time = Number(distance) / Number(speed);
@@ -154,7 +170,7 @@ function App() {
           >
             {found.vehicle}
           </div>
-          <div>Speed: {found.speed} Light Years</div>
+          <div>Speed: {found.speed}</div>
         </div>
       );
     }
@@ -178,7 +194,7 @@ function App() {
           </div>
           <br />
           <div style={{ fontSize: "20px" }}>
-            Time Taken: <b>{totalTime}</b> Light Years
+            Time Taken: <b>{totalTime}</b> Days
           </div>
           <div style={{ fontSize: "20px" }}>
             Planet Found: <b>{result.planet_name}</b>
@@ -213,7 +229,7 @@ function App() {
           <div style={{ fontWeight: 600, textAlign: "center" }}>
             Mission Failed! Falcone is yet to be found.
             <br />
-            You have lost {totalTime} Light Years
+            You have lost {totalTime} days
             <br />
             King Shan is waiting.
           </div>
@@ -299,6 +315,8 @@ function App() {
     conditionalSelectedRide,
     wrapperRef,
     updateUnit,
+    resources,
+    setResources,
   };
 
   return (
