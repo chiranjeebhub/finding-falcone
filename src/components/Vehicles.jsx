@@ -139,7 +139,7 @@ const Vehicles = () => {
             <div
               style={{
                 background: "white",
-                marginTop: "-9.5vh",
+                marginTop: "-9.9vh",
                 marginBottom: "5vh",
                 padding: "10px",
                 width: "200px",
@@ -161,17 +161,24 @@ const Vehicles = () => {
                 fontSize: "18px",
               }}
             >
-              After the recent Falicornian war, King Shan has exiled Queen Al
-              Falcone for 15 years. However, if he finds her before the 15 years
-              are up, she has to go into exile for another 15 years!
-              <br />
-              <br />
-              King Shan has received intelligence that Al Falcone is hiding in
-              one of six neighbouring planets.
-              <br />
-              <br />
-              But you have limited resources. You can only search in 4 planets.
-              Choose Wisely.
+              <ul>
+                <li>
+                  After the recent Falicornian war, King Shan has exiled Queen
+                  Al Falcone for 15 years. However, if he finds her before the
+                  15 years are up, she has to go into exile for another 15
+                  years!
+                </li>
+                <br />
+                <li>
+                  King Shan has received intelligence that Al Falcone is hiding
+                  in one of six neighbouring planets.
+                </li>
+                <br />
+                <li>
+                  However, you have limited resources. You can only search in 4
+                  planets. Choose Wisely.
+                </li>
+              </ul>
             </div>
           </div>
         ) : (
