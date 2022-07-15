@@ -264,8 +264,8 @@ function App() {
             }}
           >
             {pair.length === 4 && !showRides ? (
-              <div className="submitButton">
-                <div onClick={getToken}>Find Falcone!</div>
+              <div className="submitButton" onClick={getToken}>
+                <div>Find Falcone!</div>
               </div>
             ) : (
               ""
