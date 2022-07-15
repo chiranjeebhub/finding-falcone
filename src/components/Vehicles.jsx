@@ -1,3 +1,4 @@
+import { isContentEditable } from "@testing-library/user-event/dist/utils";
 import React, { useContext } from "react";
 import { GlobalContex } from "../globalContext";
 
@@ -5,13 +6,34 @@ const Vehicles = () => {
   const {
     wrapperRef,
     showRides,
+    setShowRides,
     vehicles,
     selectedPlanet,
+    setSelectedPlanet,
     setpair,
     pair,
     updateUnit,
     resources,
   } = useContext(GlobalContex);
+
+  const handleVehicleSelection = (item) => {
+    if (item.max_distance >= selectedPlanet.distance && item.total_no > 0) {
+      setpair([
+        ...pair,
+        {
+          planet: selectedPlanet.name,
+          distance: selectedPlanet.distance,
+          vehicle: item.name,
+          vehicleMax: item.max_distance,
+          speed: item.speed,
+        },
+      ]);
+      updateUnit(item);
+      setShowRides(false);
+      setSelectedPlanet(null);
+    }
+  };
+
   return (
     <>
       <div ref={wrapperRef} style={{ padding: "0px 10vh" }}>
@@ -63,22 +85,7 @@ const Vehicles = () => {
                       <div
                         key={index}
                         onClick={(e) => {
-                          if (
-                            item.max_distance >= selectedPlanet.distance &&
-                            item.total_no > 0
-                          ) {
-                            setpair([
-                              ...pair,
-                              {
-                                planet: selectedPlanet.name,
-                                distance: selectedPlanet.distance,
-                                vehicle: item.name,
-                                vehicleMax: item.max_distance,
-                                speed: item.speed,
-                              },
-                            ]);
-                            updateUnit(item);
-                          }
+                          handleVehicleSelection(item);
                         }}
                         style={{
                           display: "flex",

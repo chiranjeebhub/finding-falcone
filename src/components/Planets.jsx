@@ -42,7 +42,10 @@ const Planets = () => {
             >
               <img
                 onClick={(e) => {
-                  if (pair.length < 4) {
+                  if (
+                    pair.length < 4 &&
+                    !pair.find((o) => o.planet === item.name)
+                  ) {
                     setShowRides(true);
                     setSelectedPlanet(item);
                   }
